@@ -8,7 +8,11 @@ namespace hwWebAPI.Controllers
     [ApiController]
     public class BasketController : ControllerBase
     {
-        private readonly BasketService _basketService = new();
+        private readonly IBasketService _basketService;
+        public BasketController(IBasketService basketService)
+        {
+            _basketService = basketService;
+        }
 
         [HttpGet]
         public List<Basket> GetAllBaskets()

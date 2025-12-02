@@ -7,9 +7,13 @@ using static hwWebAPI.DTO_s.ProductsDTO;
 
 namespace hwWebAPI.Repositories
 {
-    public class ProductRepository
+    public class ProductRepository : IProductRepository
     {
-        BigBiteContext context = ContextFactory.createContext();
+        BigBiteContext context;
+        public ProductRepository(BigBiteContext context)
+        {
+            this.context = context;
+        }
 
         #region CRUD
 
@@ -20,17 +24,17 @@ namespace hwWebAPI.Repositories
                 .Select(p => new ProductsCategoriesDTO { Description = p.Description, Name = p.Name, Picture = p.Picture, Price = p.Price, Category = p.Category.Kind.Name }).ToList();
             return a;
         }
-        
+
         //get prod by id
         public ProductsCategoriesDTO? GetProductById(int id)
         {
             var prod = context.Products.Where(p => p.Id == id && !p.isDeleted)
                                         .Select(p => new ProductsCategoriesDTO { Description = p.Description, Name = p.Name, Picture = p.Picture, Price = p.Price, Category = p.Category.Kind.Name }).ToList();
-            if (prod.Count >0)
+            if (prod.Count > 0)
             {
                 return prod[0];
             }
-            else 
+            else
                 return null;
         }
 
@@ -80,13 +84,13 @@ namespace hwWebAPI.Repositories
         #region extra endpoints
         //getProductByCategory
         public List<Product> GetProductsByCategory(string id)
-            {
-                var productTags = context.Products
-                   .Include(x => x.Category)
-                   .Where(p => p.Category.Id == int.Parse(id) && !p.isDeleted).ToList();
+        {
+            var productTags = context.Products
+               .Include(x => x.Category)
+               .Where(p => p.Category.Id == int.Parse(id) && !p.isDeleted).ToList();
 
-                return productTags;
-            }
+            return productTags;
+        }
 
         //get all products orderedBy Name
         public List<ReadProductsDTO> GetProductsOrdered()
@@ -95,7 +99,7 @@ namespace hwWebAPI.Repositories
                 .Select(p => new ReadProductsDTO { Description = p.Description, Name = p.Name, Picture = p.Picture, Price = p.Price }).ToList();
             return a;
         }
-        
+
         //get all products without categories
         public List<ReadProductsDTO> GetProducts()
         {

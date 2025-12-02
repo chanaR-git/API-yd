@@ -1,4 +1,5 @@
 ﻿using hwWebAPI.Models;
+using hwWebAPI.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,12 @@ namespace hwWebAPI.Controllers
             new (){Name="Aba"},
             new (){Name="Ima"},
         };
+
+        public IuserRepository _userRepository;
+        public UsersController(IuserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
 
         [HttpGet]
         public IActionResult getUsers()

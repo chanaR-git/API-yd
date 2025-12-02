@@ -13,10 +13,14 @@ namespace hwWebAPI.Controllers
     public class ProductsController : ControllerBase
     {
 
-        private readonly ProductService _productService=new();
+        private readonly IProductService _productService;
+        public ProductsController(IProductService productService)
+        {
+               _productService = productService;
+        }
 
         #region CRUD 
-            [HttpGet]
+        [HttpGet]
             [Route("GetProductsWithCategories")]
             public IActionResult GetProductsWithCategory()
             {

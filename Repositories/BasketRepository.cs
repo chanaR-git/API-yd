@@ -6,26 +6,29 @@ using static hwWebAPI.DTO_s.ProductsDTO;
 
 namespace hwWebAPI.Repositories
 {
-    public class BasketRepository
+    public class BasketRepository : IBasketRepository
     {
-        BigBiteContext context = ContextFactory.createContext();
-
+        BigBiteContext _context;
+        public BasketRepository(BigBiteContext context)
+        {
+            _context = context;
+        }
 
         #region CRUD
         public List<Basket> GetAllBaskets()
         {
-            var a = context.Baskets.Include(o => o.Product).Include(p=>p.User).ToList();
+            var a = _context.Baskets.Include(o => o.Product).Include(p => p.User).ToList();
             return a;
         }
         public List<Basket> GetMyBaskets(int idUser)
         {
-            return context.Baskets.Where(b=>b.User.Id == idUser).ToList();
+            return _context.Baskets.Where(b => b.User.Id == idUser).ToList();
         }
 
         //get order by id
-        public Basket  ? GetOrderById(int id)
+        public Basket? GetOrderById(int id)
         {
-            var order = context.Baskets.FirstOrDefault(p => p.Id == id);
+            var order = _context.Baskets.FirstOrDefault(p => p.Id == id);
             return order;
         }
 
@@ -34,12 +37,12 @@ namespace hwWebAPI.Repositories
         {
             try
             {
-            Basket? b = new(){ productId = o.productId, UserId = o.UserId};
-                var a = context.Baskets.Add(b);
-                context.SaveChanges();
+                Basket? b = new() { productId = o.productId, UserId = o.UserId };
+                var a = _context.Baskets.Add(b);
+                _context.SaveChanges();
                 return a != null;
             }
-           catch (Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
@@ -50,6 +53,6 @@ namespace hwWebAPI.Repositories
 
         #endregion
 
-       
+
     }
 }

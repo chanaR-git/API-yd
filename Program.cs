@@ -1,3 +1,5 @@
+using hwWebAPI.Repositories;
+using hwWebAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,8 +11,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Dependency Injection
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddScoped<IuserRepository, userRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IBasketService, BasketService>();
+
 builder.Services.AddDbContext<hwWebAPI.Data.BigBiteContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DeafaltConnection")));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

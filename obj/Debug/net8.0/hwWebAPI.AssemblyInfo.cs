@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("hwWebAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad3777cb0b593bdd094ad36f55f027615ce860a8")]
 [assembly: System.Reflection.AssemblyProductAttribute("hwWebAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("hwWebAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

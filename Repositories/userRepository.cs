@@ -3,22 +3,26 @@ using hwWebAPI.Models;
 
 namespace hwWebAPI.Repositories
 {
-    public class userRepository
+    public class userRepository : IuserRepository
     {
-        BigBiteContext context = ContextFactory.createContext();
+        BigBiteContext context;
+        public userRepository(BigBiteContext context)
+        {
+            this.context = context;
+        }
 
         public User? Register(User user)
         {
             var a = context.Users.Add(user);
-            if (a != null) 
-            { 
+            if (a != null)
+            {
                 context.SaveChanges();
                 return user;
             }
             else
                 return null;
-        } 
-    
+        }
+
         public bool Login(User user)
         {
             //var a = context.Users.FirstOrDefault(u=>u.Name == user.Name && u.);
@@ -31,6 +35,6 @@ namespace hwWebAPI.Repositories
             //    return null;
             return true;
         }
-}
+    }
 
 }
